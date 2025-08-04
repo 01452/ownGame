@@ -1,4 +1,6 @@
 import type {Topic} from "../data/questions.ts";
+import {useContext} from "react";
+import {UserNameContext} from "../utils/context.ts";
 
 interface Props {
     topics: Topic[],
@@ -11,8 +13,13 @@ interface Props {
 }
 
 const GameBoard = ({topics, onQuestionClick}: Props) => {
+    const {userName} = useContext(UserNameContext);
+
+
+
     return (
         <div className="game-board">
+            <h1>{userName}</h1>
             {topics.map((topic, i) =>
                 <div key={i} className="topic-column">
                     <h3 className="topic-title">{topic.title}</h3>

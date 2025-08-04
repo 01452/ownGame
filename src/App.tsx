@@ -1,39 +1,21 @@
 import './App.css'
-import GameBoard from "./components/GameBoard.tsx";
-import {topics} from "./data/questions.ts";
+import Game from "./components/Game.tsx";
+import {Route, Routes} from "react-router";
+import Login from "./components/Login.tsx";
 import {useState} from "react";
-import QuestionModal from "./components/QuestionModal.tsx";
+import {UserNameContext} from "./utils/context.ts";
 
 function App() {
-    const [selected, setSelected] = useState<{
-        title: string, 
-        price: number, 
-        question: string, 
-        answer: string
-    } | null>(null);
-
-    const handleCloseModal = () => {
-        setSelected(null);
-    };
-
+    const [userName, setUserName] = useState("");
     return (
-        <>
-            {!selected && (
-                <GameBoard 
-                    topics={topics} 
-                    onQuestionClick={setSelected}
-                />
-            )}
-            {selected && (
-                <QuestionModal 
-                    title={selected.title} 
-                    price={selected.price}
-                    question={selected.question} 
-                    answer={selected.answer}
-                    onClose={handleCloseModal}
-                />
-            )}
-        </>
+        <div>
+            <UserNameContext value={{userName, setUserName}}>
+                <Routes>
+                    <Route path="/game" element={<Game/>}/>
+                    <Route path="/" element={<Login/>}/>
+                </Routes>
+            </UserNameContext>
+        </div>
     )
 }
 
